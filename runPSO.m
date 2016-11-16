@@ -49,3 +49,21 @@ ynorm =  y;
 if status == 1
     disp('O ring dataset saved successfully');
 end
+
+
+% Concrete Compressive strength
+
+data = load('datasets/Concrete_Data.csv');
+
+X = data(:, 1:8);
+
+y = data(:, 9);
+
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+[status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'U5');
+
+if status == 1
+    disp('Concrete Compressive strength dataset saved successfully');
+end
