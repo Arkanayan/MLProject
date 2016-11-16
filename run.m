@@ -1,11 +1,11 @@
 clc;
 clear all;
 close all;
-data = load('ex1data2.txt');
+data = load('slump_test.data');
 
-X = data(:, 1:2);
+X = [ data(:, 2:7) data(:, 9:11)   ];
 
-y = data(:, 3);
+y = data(:, 8);
 
 Xnorm = normalze(X);
 ynorm = normalze(y);
@@ -14,6 +14,13 @@ TEST_RUN=10;
 
 N=size(X,1);
 P=0.2;
+
+num_of_iter = 3;
+
+result_testing_error = [];
+result_training_error = [];
+
+for j = 1:1:num_of_iter
 
 for i=1:1:TEST_RUN
 
@@ -57,6 +64,13 @@ fprintf('Error=%f\n',Error);
 
 end
 
+result_testing_error = [ result_testing_error ; run_testing_error];
+result_training_error = [ result_training_error ; run_training_error];
+end
+
+fileName = 'results.xlsx';
+xlswrite(fileName, result_testing_error, 'Testing', 'D5');
+xlswrite(fileName, result_training_error, 'Training', 'D5');
 % figure;
 % 
 % plot(ynorm, 'DisplayName','Target');
@@ -68,4 +82,4 @@ end
 % std_testing_error=std(run_testing_error)
 
 % write to csv file
-dlmwrite('housing_data_testing.csv', run_testing_error, '-append');
+% dlmwrite('housing_data_testing.csv', run_testing_error, '-append');
