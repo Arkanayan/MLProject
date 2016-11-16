@@ -28,9 +28,24 @@ y = data(:, 14);
 Xnorm = normalze(X);
 ynorm = normalze(y);
 
-[status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'D5');
+[status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'I5');
 
 if status == 1
     disp('Housing dataset saved successfully');
 end
-%
+
+% O-ring dataset
+data = load('datasets/o-ring-erosion-or-blowby.data');
+
+X = data(:, 2:5);
+
+y = data(:, 1);
+
+Xnorm =  normalze(X);
+ynorm =  y;
+
+[status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'O5');
+
+if status == 1
+    disp('O ring dataset saved successfully');
+end
