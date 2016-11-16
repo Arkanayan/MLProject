@@ -1,8 +1,8 @@
 
 result_filename = 'results.xlsx';
 
-% slump dataset
-data = load('datasets/slump_test.data');
+% slump 
+data = load('slump_test.data');
 
 X = [ data(:, 2:7) data(:, 9:11)   ];
 
