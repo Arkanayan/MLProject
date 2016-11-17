@@ -67,3 +67,38 @@ ynorm = normalze(y);
 if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
 end
+
+% Red Wine quality
+
+data = load('datasets/winequality-red.csv');
+
+X = data(:, 1:11);
+
+y = data(:, 12);
+
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+[status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'AA5');
+
+if status == 1
+    disp('Red wine quality dataset saved successfully');
+end
+
+
+% Red Wine quality
+
+data = load('datasets/winequality-white.csv');
+
+X = data(:, 1:11);
+
+y = data(:, 12);
+
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+[status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'AG5');
+
+if status == 1
+    disp('White wine quality dataset saved successfully');
+end
