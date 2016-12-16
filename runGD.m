@@ -49,7 +49,8 @@ y = data(:, 1);
 Xnorm =  normalze(X);
 ynorm =  y;
 
-[status] = runAndReportGD(Xnorm, ynorm, learning_rate, no_of_iter, result_filename, 'N5');
+% learning rate = 0.1
+[status] = runAndReportGD(Xnorm, ynorm, 0.1, no_of_iter, result_filename, 'N5');
 
 if status == 1
     disp('O ring dataset saved successfully');
