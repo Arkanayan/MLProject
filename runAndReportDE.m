@@ -17,7 +17,7 @@ num_of_iter = 3;
 result_testing_error = [];
 result_training_error = [];
 
-if exist('de_iter', 'var')
+if ~exist('de_iter', 'var')
     de_iter = 200
 end
 

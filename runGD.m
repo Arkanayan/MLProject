@@ -1,6 +1,8 @@
 
 result_filename = 'results.xlsx';
 no_of_iter = 3;
+learning_rate = 0.6;
+
 % slump dataset
 data = load('datasets/slump_test.data');
 
@@ -12,7 +14,7 @@ Xnorm = normalze(X);
 ynorm = normalze(y);
 
 
-[status] = runAndReportGD(Xnorm, ynorm, no_of_iter, result_filename, 'B5');
+[status] = runAndReportGD(Xnorm, ynorm, learning_rate, no_of_iter, result_filename, 'B5');
 %[theta, Jhist] = gradientDescentMulti(Xnorm, ynorm, theta, 0.6, 1000);
 
 if status == 1
@@ -30,7 +32,8 @@ y = data(:, 14);
 Xnorm = normalze(X);
 ynorm = normalze(y);
 
-[status] = runAndReportGD(Xnorm, ynorm, no_of_iter, result_filename, 'H5');
+% learning rate needs to be 0.1 for this dataset
+[status] = runAndReportGD(Xnorm, ynorm, 0.1, no_of_iter, result_filename, 'H5');
 
 if status == 1
     disp('Housing dataset saved successfully');
@@ -46,7 +49,7 @@ y = data(:, 1);
 Xnorm =  normalze(X);
 ynorm =  y;
 
-[status] = runAndReportGD(Xnorm, ynorm, no_of_iter, result_filename, 'N5');
+[status] = runAndReportGD(Xnorm, ynorm, learning_rate, no_of_iter, result_filename, 'N5');
 
 if status == 1
     disp('O ring dataset saved successfully');
@@ -64,7 +67,7 @@ y = data(:, 9);
 Xnorm = normalze(X);
 ynorm = normalze(y);
 
-[status] = runAndReportGD(Xnorm, ynorm, no_of_iter, result_filename, 'T5');
+[status] = runAndReportGD(Xnorm, ynorm, learning_rate, no_of_iter, result_filename, 'T5');
 
 if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
@@ -81,7 +84,7 @@ y = data(:, 12);
 Xnorm = normalze(X);
 ynorm = normalze(y);
 
-[status] = runAndReportGD(Xnorm, ynorm, no_of_iter, result_filename, 'Z5');
+[status] = runAndReportGD(Xnorm, ynorm, learning_rate, no_of_iter, result_filename, 'Z5');
 
 if status == 1
     disp('Red wine quality dataset saved successfully');
@@ -99,7 +102,7 @@ y = data(:, 12);
 Xnorm = normalze(X);
 ynorm = normalze(y);
 
-[status] = runAndReportGD(Xnorm, ynorm, no_of_iter, result_filename, 'AF5');
+[status] = runAndReportGD(Xnorm, ynorm, learning_rate, no_of_iter, result_filename, 'AF5');
 
 if status == 1
     disp('White wine quality dataset saved successfully');

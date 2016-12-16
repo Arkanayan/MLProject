@@ -19,9 +19,8 @@ end
 %% Add intercept term
 
 Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
+
 theta = zeros(size(Xnorm, 2), 1);
-
-
 
 num_of_iter = 3;
 
