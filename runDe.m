@@ -1,5 +1,11 @@
+
+noOfPopulation = 20;
+
+deMaxIter = 1000;
+
 result_filename = 'results.xlsx';
 no_of_iter = 3;
+
 % slump dataset
 data = load('datasets/slump_test.data');
 
@@ -13,19 +19,105 @@ ynorm = normalze(y);
 % Add intercept term
 Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 
-noOfPopulation = 20;
-maxIter = 1000;
+[status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'H5');
+
+if status == 1
+    disp('Slump dataset saved successfully');
+end
 
 
-[target] = de( Xnorm, ynorm, noOfPopulation, maxIter, 0.8, 0.9 );
+%Housing dataset
+data = load('datasets/housing.data.txt');
 
-target
+X = data(:, 1:13);
 
-fprintf('Cost = %f \n', computeCostMulti(Xnorm, ynorm, target'));
-% Show difference
-% fprintf('\n\t Difference \n');
+y = data(:, 14);
 
-% for i=1:size(target, 1)
-%     disp((Xnorm(1, :) * target(i, :)') - ynorm(1));
-% end
-  
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
+
+[status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'J5');
+
+if status == 1
+    disp('Housing dataset saved successfully');
+end
+
+% O-ring dataset
+data = load('datasets/o-ring-erosion-or-blowby.data');
+
+X = data(:, 2:5);
+
+y = data(:, 1);
+
+Xnorm =  normalze(X);
+ynorm =  y;
+
+Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
+
+% for O-ring the # of iterations need to be set to 200
+[status] = runAndReportDE(Xnorm, ynorm, 200, no_of_iter, result_filename, 'P5');
+
+if status == 1
+    disp('O ring dataset saved successfully');
+end
+
+
+% Concrete Compressive strength
+
+data = load('datasets/Concrete_Data.csv');
+
+X = data(:, 1:8);
+
+y = data(:, 9);
+
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
+
+[status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'V5');
+
+if status == 1
+    disp('Concrete Compressive strength dataset saved successfully');
+end
+
+% Red Wine quality
+
+data = load('datasets/winequality-red.csv');
+
+X = data(:, 1:11);
+
+y = data(:, 12);
+
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
+
+[status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'AB5');
+
+if status == 1
+    disp('Red wine quality dataset saved successfully');
+end
+
+
+% White Wine quality
+
+data = load('datasets/winequality-white.csv');
+
+X = data(:, 1:11);
+
+y = data(:, 12);
+
+Xnorm = normalze(X);
+ynorm = normalze(y);
+
+Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
+
+[status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'AH5');
+
+if status == 1
+    disp('White wine quality dataset saved successfully');
+end
