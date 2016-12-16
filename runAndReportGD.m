@@ -1,4 +1,4 @@
-function [ status ] = runAndReportPSO(X, y, no_of_iter, fileName, start_cell)
+function [ status ] = runAndReportGD(X, y, learning_rate, no_of_iter, fileName, start_cell)
 %RUNANDREPORT Run PSO and write it to excel
 %   Detailed explanation goes here
 
@@ -11,6 +11,10 @@ P=0.2;
 
 Xnorm = X;
 ynorm = y;
+
+if ~exist('learning_rate' , 'var')
+    learning_rate = 0.6;
+end
 
 %% Add intercept term
 
@@ -31,7 +35,7 @@ for i=1:1:TEST_RUN
 [Train, Test] = crossvalind('HoldOut', N, P);
 
 %[theta,XgBest, cost_hist] = pso(Xnorm(Train,:), ynorm(Train), 20);
-[theta, Jhist] = gradientDescentMulti(Xnorm, ynorm, theta, 0.6, 1000);
+[theta, Jhist] = gradientDescentMulti(Xnorm, ynorm, theta, learning_rate, 1000);
 % figure
 % title('Costs');
  %num_particles = size(cost_hist, 1);
