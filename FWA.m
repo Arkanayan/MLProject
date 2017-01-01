@@ -5,7 +5,7 @@ function [ best, costHist ] = FWA(X, y, initialNumFw, maxIter )
 initialNumFw = 5;
 best = 0;
 count = 0;
-maxIter = 200;
+maxIter = 500;
 Xmax = 1;
 Xmin = 0;
 a = 0.04;
@@ -131,7 +131,7 @@ while count < maxIter
            if sparkIter == disIter
                continue
            else
-               tempDistance = sum(abs(allSparks(disIter, :) - allSparks(sparkIter, :)));
+               tempDistance = abs(sum(allSparks(disIter, :) - allSparks(sparkIter, :)));
                distance(disIter) = distance(disIter) + tempDistance;
            end
        end
