@@ -1,4 +1,4 @@
-
+%% Initialize Variables
 noOfPopulation = 20;
 
 deMaxIter = 1000;
@@ -6,7 +6,7 @@ deMaxIter = 1000;
 result_filename = 'results.xlsx';
 no_of_iter = 3;
 
-% slump dataset
+%% Slump dataset
 data = load('datasets/slump_test.data');
 
 X = [ data(:, 2:7) data(:, 9:11)   ];
@@ -19,25 +19,15 @@ ynorm = normalze(y);
 % Add intercept term
 Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 
-%[best, costHist] = FWA(Xnorm, ynorm, noOfPopulation);
-
-%best
-% for j = 1:size(best, 1)
-%     
-%    computeCostMulti(Xnorm, ynorm, best(j, :)') 
-% end
-
-%costHist
-%[status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'H5');
 [status] = runAndReportFWA(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'E5');
 
 %status
-% if status == 1
-%     disp('Slump dataset saved successfully');
-% end
-% 
-% 
-% % %Housing dataset
+if status == 1
+    disp('Slump dataset saved successfully');
+end
+
+
+%% Housing dataset
 data = load('datasets/housing.data.txt');
 
 X = data(:, 1:13);
@@ -56,8 +46,9 @@ status
 if status == 1
     disp('Housing dataset saved successfully');
 end
-% 
-% % O-ring dataset
+%
+
+%% O-ring dataset
 data = load('datasets/o-ring-erosion-or-blowby.data');
 
 X = data(:, 2:5);
@@ -77,7 +68,7 @@ if status == 1
 end
 % 
 % 
-% % Concrete Compressive strength
+%% Concrete Compressive strength
 % 
 data = load('datasets/Concrete_Data.csv');
 
@@ -96,7 +87,7 @@ if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
 end
 
-% % Red Wine quality
+%% Red Wine quality
 % 
 data = load('datasets/winequality-red.csv');
 
@@ -116,7 +107,7 @@ if status == 1
 end
 % 
 % 
-% % White Wine quality
+%% White Wine quality
 % 
 data = load('datasets/winequality-white.csv');
 
