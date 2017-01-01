@@ -5,13 +5,13 @@ function [ best, costHist ] = FWA(X, y, initialFw, maxIter )
 initialFw = 5;
 best = 0;
 count = 0;
-maxIter = 200;
+maxIter = 500;
 Xmax = 1;
 Xmin = 0;
-a = 0.8;
-b = 0.04;
+a = 0.04;
+b = 0.8;
 m = 50;
-maxAmp = 200;
+maxAmp = 40;
 mGauss = 5;
 dimen = size(X, 2);
 costHist = [];
@@ -37,12 +37,13 @@ while count < maxIter
     
     for j = 1:initialFw
         % Calculate no. of sparks
-        numSparks(j) = ( max(cost) - computeCostMulti(X, y, initialPopulation(j, :)' + eps));
+        numSparks(j) = ( max(cost) - computeCostMulti(X, y, initialPopulation(j, :)') + eps);
         
         denom = 0;
-        for k = 1:initialFw
-            denom = denom + ( max(cost) - computeCostMulti(X, y, initialPopulation(k, :)'));
-        end
+%         for k = 1:initialFw
+%             denom = denom + ( max(cost) - computeCostMulti(X, y, initialPopulation(k, :)'));
+%         end
+        denom = denom + ((initialFw * max(cost)) - sum(cost));
         denom = denom + eps;
         
         numSparks(j) =  m * (numSparks(j) / denom);
@@ -59,12 +60,13 @@ while count < maxIter
         amps(j) = ( computeCostMulti(X, y, initialPopulation(j, :)') - min(cost) + eps);
         
         denom = 0;
-        for k = 1:initialFw
-            denom = denom + (computeCostMulti(X, y, initialPopulation(k, :)') - max(cost));
-        end
+%         for k = 1:initialFw
+%             denom = denom + (computeCostMulti(X, y, initialPopulation(k, :)') - min(cost));
+%         end
+        denom = denom + (sum(cost) - (min(cost) * initialFw) );
         denom = denom + eps;
         
-        amps(j) =  m * (amps(j) / denom);
+        amps(j) =  maxAmp * (amps(j) / denom);
         
         % Generate Sparks
         %sparks = zeros(sum(numSparks) + mGauss, size(X, 2));
@@ -136,9 +138,12 @@ while count < maxIter
     newCosts = [];
     sparks = [];
 end
-
-    
- best = initialPopulation;
+        cost = [];
+        for i = 1:size(initialPopulation, 1)
+            cost(i) = computeCostMulti(X, y, initialPopulation(i, :)');
+        end
+        [bestScore, bestIndex] = min(cost);
+        best = initialPopulation(bestIndex, :);
 end
 
 function [ result ] = clamp(value, maxVal, minVal)
