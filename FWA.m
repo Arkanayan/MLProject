@@ -1,11 +1,11 @@
-function [ best, costHist ] = FWA(X, y, initialFw, maxIter )
+function [ best, costHist ] = FWA(X, y, initialNumFw, maxIter )
 %FWA Summary of this function goes here
 %   Detailed explanation goes here
 %% Initialize parameters
-initialFw = 5;
+initialNumFw = 5;
 best = 0;
 count = 0;
-maxIter = 500;
+maxIter = 200;
 Xmax = 1;
 Xmin = 0;
 a = 0.04;
@@ -17,7 +17,7 @@ dimen = size(X, 2);
 costHist = [];
 %% Generate Initial population
 
-initialPopulation = rand(initialFw, size(X, 2)); 
+initialPopulation = rand(initialNumFw, size(X, 2)); 
 
 cost = zeros(size(initialPopulation, 1), 1);
 
@@ -26,8 +26,8 @@ for i = 1:size(cost, 1)
 end
 %%
 
-numSparks = zeros(initialFw, 1);
-amps = zeros(initialFw, 1);
+numSparks = zeros(initialNumFw, 1);
+amps = zeros(initialNumFw, 1);
 
 while count < maxIter
     
@@ -35,7 +35,7 @@ while count < maxIter
         cost(i) = computeCostMulti(X, y, initialPopulation(i, :)');
     end
     
-    for j = 1:initialFw
+    for j = 1:initialNumFw
         % Calculate no. of sparks
         numSparks(j) = ( max(cost) - computeCostMulti(X, y, initialPopulation(j, :)') + eps);
         
@@ -43,7 +43,7 @@ while count < maxIter
 %         for k = 1:initialFw
 %             denom = denom + ( max(cost) - computeCostMulti(X, y, initialPopulation(k, :)'));
 %         end
-        denom = denom + ((initialFw * max(cost)) - sum(cost));
+        denom = denom + ((initialNumFw * max(cost)) - sum(cost));
         denom = denom + eps;
         
         numSparks(j) =  m * (numSparks(j) / denom);
@@ -63,7 +63,7 @@ while count < maxIter
 %         for k = 1:initialFw
 %             denom = denom + (computeCostMulti(X, y, initialPopulation(k, :)') - min(cost));
 %         end
-        denom = denom + (sum(cost) - (min(cost) * initialFw) );
+        denom = denom + (sum(cost) - (min(cost) * initialNumFw) );
         denom = denom + eps;
         
         amps(j) =  maxAmp * (amps(j) / denom);
@@ -97,7 +97,7 @@ while count < maxIter
     rowIndex = size(sparks, 1);
     for j = 1:mGauss
         rowIndex = rowIndex + 1;
-        fireworkIndex = randi(initialFw);
+        fireworkIndex = randi(initialNumFw);
         z = randi(dimen);
         g = rand();
         dimens = randperm(dimen, z);
@@ -110,34 +110,79 @@ while count < maxIter
         
     end
     
-    % select best location
-    % Generate costs
-    newCosts = zeros(size(sparks, 1), 1);
-    for costIter = 1:size(sparks, 1)
-       newCosts(costIter) = computeCostMulti(X, y, sparks(costIter, :)');
-    end
-    
-   [bestSparkCost, bestSparkIndex] =  min(newCosts);
-   bestSpark = sparks(bestSparkIndex, :);
+
    
    allSparks = [initialPopulation ; sparks];
-   allCosts = [cost; newCosts];
+%   allCosts = [cost; newCosts];
+%    
+%    % select best N values
+%    [sortedCosts, sortedCostIndices] = sort(allCosts, 'ascend');
+%    
+%    for n = 1 : initialFw
+%       initialPopulation(n, :) = allSparks(sortedCostIndices(n), :); 
+%    end
+
+    % Selection of locations
+    % calculate distance
+    distance = zeros(size(allSparks, 1), 1);
+    for disIter = 1:size(allSparks , 1)
+        distance(disIter) = 0;
+       for sparkIter= 1:size(allSparks, 1)
+           if sparkIter == disIter
+               continue
+           else
+               tempDistance = sum(abs(allSparks(disIter, :) - allSparks(sparkIter, :)));
+               distance(disIter) = distance(disIter) + tempDistance;
+           end
+       end
+    end
    
-   % select best N values
-   [sortedCosts, sortedCostIndices] = sort(allCosts, 'ascend');
-   
-   for n = 1 : initialFw
-      initialPopulation(n, :) = allSparks(sortedCostIndices(n), :); 
-   end
+    % Calculate Probablity
+    probability = zeros(size(allSparks, 1), 1);
+    sumDistance = sum(distance);
+    for probIter = 1:size(allSparks, 1)
+       probability(probIter) = distance(probIter) / sumDistance; 
+    end
+    
+    % Select Sparks
+    selectedSparks = zeros(initialNumFw - 1, size(X, 2)); 
+    for selectionIter = 1 : initialNumFw - 1
+        
+        sumProbability = 0;
+        randomProb = rand();
+        for sparksIter = 1 : size(allSparks, 1)
+            sumProbability = sumProbability + probability(sparksIter);
+           if randomProb < sumProbability
+               selectedSparks(selectionIter, :) = allSparks(sparksIter, :);
+               break
+           end
+        end
+    end
+    % Find best spark
+        % select best location
+    % Generate costs
+    newCosts = zeros(size(allSparks, 1), 1);
+    for costIter = 1:size(allSparks, 1)
+       newCosts(costIter) = computeCostMulti(X, y, allSparks(costIter, :)');
+    end
+    [bestSparkCost, bestSparkIndex] =  min(newCosts);
+    bestSpark = allSparks(bestSparkIndex, :);
+    
+    selectedSparks = [selectedSparks; bestSpark];
+    
+    initialPopulation = selectedSparks;
+    
+    
     count = count + 1;
     
     % reset all variables
-    costHist = [costHist; sortedCosts(initialFw)];
+   % costHist = [costHist; sortedCosts(initialFw)];
     allSparks = [];
     allCosts = [];
     newCosts = [];
     sparks = [];
 end
+        % Find best spark and Return
         cost = [];
         for i = 1:size(initialPopulation, 1)
             cost(i) = computeCostMulti(X, y, initialPopulation(i, :)');
