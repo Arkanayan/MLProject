@@ -144,7 +144,7 @@ while count < maxIter
        probability(probIter) = distance(probIter) / sumDistance; 
     end
     
-    % Select Sparks
+    % Select Sparks for next generation
     selectedSparks = zeros(initialNumFw - 1, size(X, 2)); 
     for selectionIter = 1 : initialNumFw - 1
         
