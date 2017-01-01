@@ -6,7 +6,7 @@ Algorithm named files (e.g. de.m, FWA.m) files contains the implementations of t
 
 "runAndReport::Algorithm name::.m" files runs algorithms with cross validations and writes to excel file.
 
-"run::Algorithm name::.m" files runs with algorithms against the datasets. 
+"run::Algorithm name::.m" files runs algorithms against the datasets. 
 
 "results.xlsx" file stores the results.
 
