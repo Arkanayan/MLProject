@@ -1,6 +1,7 @@
 
 result_filename = 'results.xlsx';
 no_of_iter = 3;
+time = [];
 % slump dataset
 data = load('datasets/slump_test.data');
 
@@ -13,9 +14,12 @@ ynorm = normalze(y);
 
 [status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'C5');
 
+
 if status == 1
     disp('Slump dataset saved successfully');
 end
+
+time = [ time ; calculateTime(pso(Xnorm, ynorm, 10))];
 
 
 %Housing dataset
@@ -34,6 +38,8 @@ if status == 1
     disp('Housing dataset saved successfully');
 end
 
+time = [ time ; calculateTime(pso(Xnorm, ynorm, 10))];
+
 % O-ring dataset
 data = load('datasets/o-ring-erosion-or-blowby.data');
 
@@ -50,6 +56,7 @@ if status == 1
     disp('O ring dataset saved successfully');
 end
 
+time = [ time ; calculateTime(pso(Xnorm, ynorm, 10))];
 
 % Concrete Compressive strength
 
@@ -63,6 +70,9 @@ Xnorm = normalze(X);
 ynorm = normalze(y);
 
 [status] = runAndReportPSO(Xnorm, ynorm, no_of_iter, result_filename, 'U5');
+
+time = [ time ; calculateTime(pso(Xnorm, ynorm, 10))];
+
 
 if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
@@ -85,6 +95,7 @@ if status == 1
     disp('Red wine quality dataset saved successfully');
 end
 
+time = [ time ; calculateTime(pso(Xnorm, ynorm, 10))];
 
 % Red Wine quality
 
@@ -102,3 +113,5 @@ ynorm = normalze(y);
 if status == 1
     disp('White wine quality dataset saved successfully');
 end
+
+time = [ time ; calculateTime(pso(Xnorm, ynorm, 10))];

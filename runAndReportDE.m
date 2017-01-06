@@ -18,7 +18,7 @@ result_testing_error = [];
 result_training_error = [];
 
 if ~exist('de_iter', 'var')
-    de_iter = 200
+    de_iter = 200;
 end
 
 for j = 1:1:num_of_iter
@@ -27,7 +27,7 @@ for i = 1:1:TEST_RUN
 
 [Train, Test] = crossvalind('HoldOut', N, P);
 
-[theta] = de(Xnorm, ynorm, 20, de_iter, 0.8, 0.9 );
+[theta] = de(Xnorm, ynorm, 10, de_iter, 0.8, 0.9 );
 
 
 

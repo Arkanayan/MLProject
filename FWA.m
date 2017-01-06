@@ -2,17 +2,17 @@ function [ best, costHist ] = FWA(X, y, initialNumFw, maxIter )
 %FWA Summary of this function goes here
 %   Detailed explanation goes here
 %% Initialize parameters
-initialNumFw = 5;
+initialNumFw = 10;
 best = 0;
 count = 0;
-maxIter = 500;
+maxIter = 200;
 Xmax = 1;
 Xmin = 0;
 a = 0.04;
 b = 0.8;
 m = 50;
 maxAmp = 40;
-mGauss = 5;
+mGauss = 10;
 dimen = size(X, 2);
 costHist = [];
 %% Generate Initial population

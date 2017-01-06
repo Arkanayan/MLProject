@@ -1,5 +1,5 @@
 function [ status ] = runAndReportFWA(X, y, de_iter, no_of_iter, fileName, start_cell)
-%RUNANDREPORT Run PSO and write it to excel
+%RUNANDREPORT Run Fireworks and write it to excel
 %   Detailed explanation goes here
 
 % xlswrite(filename, run_testing_error, 'Testing', 'C5');
@@ -27,8 +27,7 @@ for i = 1:1:TEST_RUN
 
 [Train, Test] = crossvalind('HoldOut', N, P);
 
-[theta, costHist] = FWA(Xnorm, ynorm, 5);
-
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
 
 
 %--Training error

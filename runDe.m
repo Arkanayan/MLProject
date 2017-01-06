@@ -1,7 +1,7 @@
 
 noOfPopulation = 20;
 
-deMaxIter = 1000;
+deMaxIter = 200;
 
 result_filename = 'results.xlsx';
 no_of_iter = 3;
@@ -25,6 +25,13 @@ if status == 1
     disp('Slump dataset saved successfully');
 end
 
+% Measure running time
+timeStart = tic;
+[theta] = de(Xnorm, ynorm, 10, deMaxIter, 0.8, 0.9 );
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
 
 %Housing dataset
 data = load('datasets/housing.data.txt');
@@ -43,6 +50,14 @@ Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 if status == 1
     disp('Housing dataset saved successfully');
 end
+
+% Measure running time
+timeStart = tic;
+[theta] = de(Xnorm, ynorm, 10, deMaxIter, 0.8, 0.9 );
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
 
 % O-ring dataset
 data = load('datasets/o-ring-erosion-or-blowby.data');
@@ -63,6 +78,13 @@ if status == 1
     disp('O ring dataset saved successfully');
 end
 
+% Measure running time
+timeStart = tic;
+[theta] = de(Xnorm, ynorm, 10, deMaxIter, 0.8, 0.9 );
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
 
 % Concrete Compressive strength
 
@@ -83,6 +105,14 @@ if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
 end
 
+% Measure running time
+timeStart = tic;
+[theta] = de(Xnorm, ynorm, 10, deMaxIter, 0.8, 0.9 );
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
+
 % Red Wine quality
 
 data = load('datasets/winequality-red.csv');
@@ -102,6 +132,14 @@ if status == 1
     disp('Red wine quality dataset saved successfully');
 end
 
+% Measure running time
+timeStart = tic;
+[theta] = de(Xnorm, ynorm, 10, deMaxIter, 0.8, 0.9 );
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
+
 
 % White Wine quality
 
@@ -116,8 +154,18 @@ ynorm = normalze(y);
 
 Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 
+
 [status] = runAndReportDE(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'AH5');
+
 
 if status == 1
     disp('White wine quality dataset saved successfully');
 end
+
+% Measure running time
+timeStart = tic;
+[theta] = de(Xnorm, ynorm, 10, deMaxIter, 0.8, 0.9 );
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;

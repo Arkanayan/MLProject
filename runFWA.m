@@ -21,6 +21,16 @@ Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 
 [status] = runAndReportFWA(Xnorm, ynorm, deMaxIter, no_of_iter, result_filename, 'E5');
 
+% Calculate time taken
+
+timeStart = tic;
+
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
+
 %status
 if status == 1
     disp('Slump dataset saved successfully');
@@ -46,7 +56,16 @@ status
 if status == 1
     disp('Housing dataset saved successfully');
 end
-%
+
+% Calculate time taken
+
+timeStart = tic;
+
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
 
 %% O-ring dataset
 data = load('datasets/o-ring-erosion-or-blowby.data');
@@ -66,8 +85,17 @@ Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 if status == 1
     disp('O ring dataset saved successfully');
 end
-% 
-% 
+
+% Calculate time taken
+
+timeStart = tic;
+
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
+
 %% Concrete Compressive strength
 % 
 data = load('datasets/Concrete_Data.csv');
@@ -87,6 +115,16 @@ if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
 end
 
+% Calculate time taken
+
+timeStart = tic;
+
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
+
 %% Red Wine quality
 % 
 data = load('datasets/winequality-red.csv');
@@ -105,8 +143,17 @@ Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 if status == 1
     disp('Red wine quality dataset saved successfully');
 end
-% 
-% 
+
+% Calculate time taken
+
+timeStart = tic;
+
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;
+
 %% White Wine quality
 % 
 data = load('datasets/winequality-white.csv');
@@ -125,3 +172,13 @@ Xnorm = [ ones(size(Xnorm, 1), 1) Xnorm];
 if status == 1
     disp('White wine quality dataset saved successfully');
 end
+
+% Calculate time taken
+
+timeStart = tic;
+
+[theta, costHist] = FWA(Xnorm, ynorm, 10);
+
+time = toc(timeStart);
+fprintf('\nTime: %f\n', time);
+keyboard;

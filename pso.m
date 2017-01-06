@@ -2,7 +2,7 @@ function [theta,XgBest, cost_hist] = pso(X, y, noOfParticles)
 
 %% Variables
 %noOfParticles = 3;
-iterations = 1000;
+iterations = 200;
 
 
 

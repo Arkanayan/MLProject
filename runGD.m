@@ -2,6 +2,7 @@
 result_filename = 'results.xlsx';
 no_of_iter = 3;
 learning_rate = 0.6;
+time = [];
 
 % slump dataset
 data = load('datasets/slump_test.data');
@@ -21,6 +22,8 @@ if status == 1
     disp('Slump dataset saved successfully');
 end
 
+time = [ time ; calculateTime(gradientDescentMulti(Xnorm, ynorm, zeros(size(Xnorm, 2), 1), learning_rate, 2000))];
+
 
 %Housing dataset
 data = load('datasets/housing.data.txt');
@@ -39,6 +42,8 @@ if status == 1
     disp('Housing dataset saved successfully');
 end
 
+time = [ time ; calculateTime(gradientDescentMulti(Xnorm, ynorm, zeros(size(Xnorm, 2), 1), learning_rate, 2000))];
+
 % O-ring dataset
 data = load('datasets/o-ring-erosion-or-blowby.data');
 
@@ -55,6 +60,8 @@ ynorm =  y;
 if status == 1
     disp('O ring dataset saved successfully');
 end
+
+time = [ time ; calculateTime(gradientDescentMulti(Xnorm, ynorm, zeros(size(Xnorm, 2), 1), 0.1, 2000))];
 
 
 % Concrete Compressive strength
@@ -74,6 +81,8 @@ if status == 1
     disp('Concrete Compressive strength dataset saved successfully');
 end
 
+time = [ time ; calculateTime(gradientDescentMulti(Xnorm, ynorm, zeros(size(Xnorm, 2), 1), learning_rate, 2000))];
+
 % Red Wine quality
 
 data = load('datasets/winequality-red.csv');
@@ -91,6 +100,7 @@ if status == 1
     disp('Red wine quality dataset saved successfully');
 end
 
+time = [ time ; calculateTime(gradientDescentMulti(Xnorm, ynorm, zeros(size(Xnorm, 2), 1), learning_rate, 2000))];
 
 % Red Wine quality
 
@@ -108,3 +118,5 @@ ynorm = normalze(y);
 if status == 1
     disp('White wine quality dataset saved successfully');
 end
+
+time = [ time ; calculateTime(gradientDescentMulti(Xnorm, ynorm, zeros(size(Xnorm, 2), 1), learning_rate, 2000))];
