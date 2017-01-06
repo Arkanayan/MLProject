@@ -34,7 +34,7 @@ for i=1:1:TEST_RUN
 [Train, Test] = crossvalind('HoldOut', N, P);
 
 %[theta,XgBest, cost_hist] = pso(Xnorm(Train,:), ynorm(Train), 20);
-[theta, Jhist] = gradientDescentMulti(Xnorm, ynorm, theta, learning_rate, 1000);
+[theta, Jhist] = gradientDescentMulti(Xnorm(Train,:), ynorm(Train, :), theta, learning_rate, 2000);
 % figure
 % title('Costs');
  %num_particles = size(cost_hist, 1);
@@ -62,6 +62,7 @@ run_training_error(i,1)=Error;
 data_size=size(Xnorm(Test,:),1);
 
 %Y=ones(data_size,1)+sum(Xnorm(Test,:).*repmat(XgBest,data_size,1),2);
+[theta, Jhist] = gradientDescentMulti(Xnorm(Test,:), ynorm(Test, :), theta, learning_rate, 2000);
 
 Y = Xnorm(Test, :) * theta;
 Error=sum(abs(ynorm(Test)-Y));
@@ -78,11 +79,11 @@ result_testing_error = [ result_testing_error ; run_testing_error];
 result_training_error = [ result_training_error ; run_training_error];
 end
 
-[status_test] = xlswrite(fileName, result_testing_error, 'Testing', start_cell);
-[status_train] = xlswrite(fileName, result_training_error, 'Training', start_cell);
+% [status_test] = xlswrite(fileName, result_testing_error, 'Testing', start_cell);
+% [status_train] = xlswrite(fileName, result_training_error, 'Training', start_cell);
 
-status = status_test && status_train;
-%status = 0;
+% status = status_test && status_train;
+status = 0;
 % End of function
 end
 
