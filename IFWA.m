@@ -1,11 +1,11 @@
-function [ best, costHist ] = FWA(X, y, initialNumFw, maxIter )
+function [ best, costHist ] = IFWA(X, y, initialNumFw, maxIter )
 %FWA Summary of this function goes here
 %   Detailed explanation goes here
 %% Initialize parameters
 initialNumFw = 10;
 best = 0;
-count = 0;
-maxIter = 1000;
+count = 1;
+maxIter = 200;
 Xmax = 1;
 Xmin = 0;
 a = 0.04;
@@ -14,9 +14,12 @@ m = 50;
 maxAmp = 40;
 mGauss = 10;
 dimen = size(X, 2);
-costHist = [];
+costHist = zeros(maxIter, 1);
 maxSparks = 32;
 minSparks = 2;
+max_ctrl_param = 20;
+min_ctrl_param = 1;
+max_eval = maxIter * initialNumFw;
 %% Generate Initial population
 
 initialPopulation = rand(initialNumFw, size(X, 2)); 
@@ -31,7 +34,7 @@ cost = zeros(size(initialPopulation, 1), 1);
 numSparks = zeros(initialNumFw, 1);
 amps = zeros(initialNumFw, 1);
 
-while count < maxIter
+while count < (maxIter + 1)
     
     for i = 1:size(initialPopulation, 1)
         cost(i) = computeCostMulti(X, y, initialPopulation(i, :)');
@@ -139,16 +142,16 @@ while count < maxIter
       initialPopulation(n, :) = allSparks(sortedCostIndices(n), :); 
    end
 
-
-    %% Increment Counter
-    count = count + 1;
     
    %% reset all variables
-   % costHist = [costHist; sortedCosts(initialFw)];
+    costHist(count) = allCosts(sortedCostIndices(1));
     allSparks = [];
     allCosts = [];
     newCosts = [];
     sparks = [];
+    
+    %% Increment Counter
+    count = count + 1;
 end
         %% Find best spark and Return
         cost = [];
