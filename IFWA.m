@@ -138,9 +138,8 @@ while count < (maxIter + 1)
 %    % select best N values
    [~, sortedCostIndices] = sort(allCosts, 'ascend');
    
-   for n = 1 : initialNumFw
-      initialPopulation(n, :) = allSparks(sortedCostIndices(n), :); 
-   end
+   % Select best sparks for next iteration
+   initialPopulation(:, :) = allSparks(sortedCostIndices(1:initialNumFw), :);
 
     
    %% reset all variables
